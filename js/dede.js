@@ -3,6 +3,7 @@ var diceElem          = null;
 var diceNumberElem    = null;
 var configElem        = null;
 var configNumbersElem = null;
+var runButtonElem     = null;
 
 var numbers = 16;
 
@@ -12,6 +13,7 @@ var numbers = 16;
 window.onload = function() {
   initElems();
   initConfig();
+  initEvents();
 }
 
 /**
@@ -22,6 +24,7 @@ var initElems = function() {
   diceNumberElem    = document.getElementById("dice-number");
   configElem        = document.getElementById("config");
   configNumbersElem = document.getElementById("config-numbers");
+  runButtonElem     = document.getElementById("run-button");
 }
 
 /**
@@ -35,13 +38,30 @@ var initConfig = function() {
     inputElem = document.createElement("input");
     inputElem.type = "checkbox";
     inputElem.id = "config-numbers-"+i;
+    inputElem.checked = true;
     labelElem = document.createElement("label");
     labelElem.htmlFor= "config-numbers-"+i;
-    labelElem.innerHTML = i;
+    labelElem.innerHTML = i+1;
     liElem = document.createElement("li");
     liElem.appendChild(inputElem);
     liElem.appendChild(labelElem);
     configNumbersElem.appendChild(liElem);
   }
+}
+
+/**
+ * Initialize events.
+ */
+var initEvents = function() {
+  runButtonElem.onclick = function(e) {
+    launchDice();
+  };
+}
+
+/**
+ * Dice launching.
+ */
+var launchDice = function() {
+  diceNumberElem.innerHTML = 1;
 }
 

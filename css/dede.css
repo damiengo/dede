@@ -1,0 +1,41 @@
+ul {
+  list-style-type: none;
+}
+
+label {
+  display: block;
+  text-align: center;
+}
+
+#content {
+  width: 800px;
+  margin: 0 auto;
+}
+
+#dice {
+  width: 100px;
+  height: 100px;
+  margin: 0 auto;
+  background-color: #0000FF;
+}
+
+#dice-number {
+  color: #FFF;
+  font-size: 40px;
+  text-align: center;
+  padding-top: 25px;
+}
+
+#config-numbers {
+  overflow: hidden;
+}
+
+#config-numbers li {
+  float: left;
+  margin-left: 20px;
+}
+
+#run {
+  text-align: center;
+}
+
