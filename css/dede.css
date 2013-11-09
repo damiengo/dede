@@ -1,3 +1,7 @@
+body {
+  font-family: "Trebuchet MS", sans-serif;
+}
+
 ul {
   list-style-type: none;
 }
@@ -8,26 +12,33 @@ label {
 }
 
 #content {
-  width: 800px;
+  width: 900px;
   margin: 0 auto;
 }
 
 #dice {
   width: 100px;
   height: 100px;
-  margin: 0 auto;
+  margin: 50px auto;
   background-color: #0000FF;
+  -moz-border-radius: 20px;
+  -webkit-border-radius: 20px;
+  border-radius: 20px;
+  box-shadow: -1px 2px 5px 1px rgba(0, 0, 0, 0.7);
+  text-shadow: 0 0 7px rgba(80, 80, 80, 0.5);
 }
 
 #dice-number {
   color: #FFF;
-  font-size: 40px;
+  font-size: 60px;
+  font-weight: bold;
   text-align: center;
-  padding-top: 25px;
+  padding-top: 18px;
 }
 
 #config-numbers {
   overflow: hidden;
+  font-size: 20px;
 }
 
 #config-numbers li {

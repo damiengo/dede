@@ -5,7 +5,9 @@ var configElem        = null;
 var configNumbersElem = null;
 var runButtonElem     = null;
 
-var numbers = 16;
+var numbers = 20;
+var nbLaunches = 0;
+var randomizer = null;
 
 /**
  * On document loaded.
@@ -62,6 +64,45 @@ var initEvents = function() {
  * Dice launching.
  */
 var launchDice = function() {
-  diceNumberElem.innerHTML = 1;
+  var checkeds = getCheckeds();
+  nbLaunches = Math.floor((Math.random()*10) + 10);
+  randomizer = setInterval(function() {randomize(checkeds); }, 100);
+}
+
+/**
+ * Randomizing.
+ *
+ * @param checkeds
+ *
+ * @return int
+ */
+var randomize = function(checkeds) {
+  var maxRand = checkeds.length;
+  var rand = Math.floor((Math.random()*maxRand));
+  diceNumberElem.innerHTML = checkeds[rand] + 1;
+
+  if(nbLaunches == 0) {
+    document.getElementById("config-numbers-"+checkeds[rand]).checked = false;
+    clearInterval(randomizer);
+  }
+  else {
+    nbLaunches--;
+  }
+}
+
+/**
+ * Get checkeds boxes.
+ */
+var getCheckeds = function() {
+  var inputs = document.getElementsByTagName("input");
+  var inputsLength = inputs.length;
+  var checkeds = new Array();
+  for(var i=0 ; i< inputsLength ; i++) {
+    if(inputs[i].type == "checkbox" && inputs[i].checked) {
+      checkeds.push(i);
+    }
+  }
+
+  return checkeds;
 }
 
