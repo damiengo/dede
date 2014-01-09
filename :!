@@ -59,8 +59,6 @@ function light() {
  */
 function cub() {
   var geometry = new THREE.CubeGeometry(2,2,2);
-  //@todo Add
-  //var txt = textTexture("8");
   var material = new THREE.MeshLambertMaterial( { color: 0x0000ff } );
   cube = new THREE.Mesh( geometry, material );
   scene.add( cube );
@@ -68,23 +66,9 @@ function cub() {
 
 /**
  * Creates a texture with a text.
- *
- * @param text
- *
- * @return Texture
  */
 function textTexture(text) {
-  var canvas = document.createElement('canvas');
-  var context = canvas.getContext('2d');
-  context.font = "Bold 40px Arial";
-  context.fillStyle = "rgba(255,0,0,0.95)";
-  context.fillText(text, 0, 50);
-  
-  // canvas contents will be used for a texture
-  var texture = new THREE.Texture(canvas); 
-  texture.needsUpdate = true;
 
-  return texture;
 }
 
 /**
