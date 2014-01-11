@@ -60,15 +60,13 @@ function light() {
 function cub() {
   var geometry = new THREE.CubeGeometry(2,2,2);
 
-  // Texture: http://net.tutsplus.com/tutorials/javascript-ajax/webgl-with-three-js-textures-particles/
-
   var materials = [];
-materials.push(new THREE.MeshLambertMaterial({ map: textTexture("1") })); // right face
-materials.push(new THREE.MeshLambertMaterial({ map: textTexture("2") })); // left face
-materials.push(new THREE.MeshLambertMaterial({ map: textTexture("3") })); // top face
-materials.push(new THREE.MeshLambertMaterial({ map: textTexture("4") })); // bottom face
-materials.push(new THREE.MeshLambertMaterial({ map: textTexture("5") })); // front face
-materials.push(new THREE.MeshLambertMaterial({ map: textTexture("6") })); // back face
+  materials.push(new THREE.MeshLambertMaterial({ map: textTexture("1") })); // right face
+  materials.push(new THREE.MeshLambertMaterial({ map: textTexture("2") })); // left face
+  materials.push(new THREE.MeshLambertMaterial({ map: textTexture("3") })); // top face
+  materials.push(new THREE.MeshLambertMaterial({ map: textTexture("4") })); // bottom face
+  materials.push(new THREE.MeshLambertMaterial({ map: textTexture("5") })); // front face
+  materials.push(new THREE.MeshLambertMaterial({ map: textTexture("6") })); // back face
 
   var cubeMaterial = new THREE.MeshFaceMaterial(materials);
 
@@ -86,9 +84,11 @@ materials.push(new THREE.MeshLambertMaterial({ map: textTexture("6") })); // bac
 function textTexture(text) {
   var canvas = document.createElement('canvas');
   var context = canvas.getContext('2d');
-  context.font = "Bold 40px Arial";
-  context.fillStyle = "rgba(255,0,0,0.95)";
-  context.fillText(text, 0, 50);
+  context.fillStyle= "#0000ff";
+  context.fillRect(0,0,300,150);
+  context.fillStyle = "rgba(255,255,255,1)";
+  context.font = "Bold 60px Arial";
+  context.fillText(text, 130, 100);
   
   // canvas contents will be used for a texture
   var texture = new THREE.Texture(canvas); 
@@ -103,7 +103,8 @@ function textTexture(text) {
 function render() {
   requestAnimationFrame(render);
   cube.rotation.x += 0.01;
-  cube.rotation.y += 0.05;
+  cube.rotation.y += 0.03;
+  cube.rotation.z += 0.05;
   renderer.render(scene, camera);
 }
 
