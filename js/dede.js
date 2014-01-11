@@ -59,10 +59,20 @@ function light() {
  */
 function cub() {
   var geometry = new THREE.CubeGeometry(2,2,2);
-  //@todo Add
-  //var txt = textTexture("8");
-  var material = new THREE.MeshLambertMaterial( { color: 0x0000ff } );
-  cube = new THREE.Mesh( geometry, material );
+
+  // Texture: http://net.tutsplus.com/tutorials/javascript-ajax/webgl-with-three-js-textures-particles/
+
+  var materials = [];
+materials.push(new THREE.MeshLambertMaterial({ map: textTexture("1") })); // right face
+materials.push(new THREE.MeshLambertMaterial({ map: textTexture("2") })); // left face
+materials.push(new THREE.MeshLambertMaterial({ map: textTexture("3") })); // top face
+materials.push(new THREE.MeshLambertMaterial({ map: textTexture("4") })); // bottom face
+materials.push(new THREE.MeshLambertMaterial({ map: textTexture("5") })); // front face
+materials.push(new THREE.MeshLambertMaterial({ map: textTexture("6") })); // back face
+
+  var cubeMaterial = new THREE.MeshFaceMaterial(materials);
+
+  cube = new THREE.Mesh( geometry, cubeMaterial );
   scene.add( cube );
 }
 
