@@ -6,6 +6,8 @@ var renderer = new THREE.WebGLRenderer();
 var cube = null;
 // Camera
 var camera = null;
+// Rendering functions
+var onRenderFcts = new Array();
 
 // Launch
 run();
@@ -28,6 +30,8 @@ function init() {
   renderer.setSize( window.innerWidth-30, window.innerHeight-30 );
   renderer.setClearColor( 0xffffff, 0 );
   document.body.appendChild( renderer.domElement );
+  // Add the first rendering function
+  onRenderFcts.push(rotateCube);
 }
 
 /**
@@ -102,9 +106,19 @@ function textTexture(text) {
  */
 function render() {
   requestAnimationFrame(render);
+	// call each update function
+	onRenderFcts.forEach(function(onRenderFct){
+	  onRenderFct();
+	})
+  renderer.render(scene, camera);
+}
+
+/**
+ * Function to rotate the cube.
+ */
+function rotateCube() {
   cube.rotation.x += 0.01;
   cube.rotation.y += 0.03;
   cube.rotation.z += 0.05;
-  renderer.render(scene, camera);
 }
 
