@@ -19,6 +19,7 @@ function run() {
   init();
   cam();
   light();
+  axes();
   cub();
   render();
 }
@@ -79,6 +80,33 @@ function cub() {
 }
 
 /**
+ * Creates axes.
+ */
+function axes() {
+  // X axe
+  var xMaterial = new THREE.LineBasicMaterial({color: 0xff0000});
+  var xGeometry = new THREE.Geometry();
+  xGeometry.vertices.push(new THREE.Vector3(-3, 0, 0));
+  xGeometry.vertices.push(new THREE.Vector3( 3, 0, 0));
+  var xLine = new THREE.Line(xGeometry, xMaterial);
+  scene.add(xLine);
+  // Y axe
+  var yMaterial = new THREE.LineBasicMaterial({color: 0x00ffff});
+  var yGeometry = new THREE.Geometry();
+  yGeometry.vertices.push(new THREE.Vector3(0,-3, 0));
+  yGeometry.vertices.push(new THREE.Vector3(0, 3, 0));
+  var yLine = new THREE.Line(yGeometry, yMaterial);
+  scene.add(yLine);
+  // Z axe
+  var zMaterial = new THREE.LineBasicMaterial({color: 0x00ffff});
+  var zGeometry = new THREE.Geometry();
+  zGeometry.vertices.push(new THREE.Vector3(0, 0,-3));
+  zGeometry.vertices.push(new THREE.Vector3(0, 0, 3));
+  var zLine = new THREE.Line(zGeometry, zMaterial);
+  scene.add(zLine);
+}
+
+/**
  * Creates a texture with a text.
  *
  * @param text
@@ -120,5 +148,14 @@ function rotateCube() {
   cube.rotation.x += 0.01;
   cube.rotation.y += 0.03;
   cube.rotation.z += 0.05;
+}
+
+/**
+ * Translate the dice to one face.
+ *
+ * @param nb The face number to display
+ */
+function showFace(nb) {
+  cube.rotation.x += 0.1;
 }
 
