@@ -32,7 +32,10 @@ function init() {
   renderer.setClearColor( 0xffffff, 0 );
   document.body.appendChild( renderer.domElement );
   // Add the first rendering function
-  onRenderFcts.push(rotateCube);
+  //onRenderFcts.push(rotateCube);
+  onRenderFcts.push(function() { 
+    showFace(6); 
+  });
 }
 
 /**
@@ -153,9 +156,27 @@ function rotateCube() {
 /**
  * Translate the dice to one face.
  *
- * @param nb The face number to display
+ * @param nb          The face number to display
+ * @param endCallback Function to call after the end
  */
-function showFace(nb) {
-  cube.rotation.x += 0.1;
+function showFace(nb, endCallback) {
+  // Faces 1 to 4
+  if(nb > 0 && nb < 5) {
+    if(cube.rotation.x < (nb * Math.PI/2)) {
+      cube.rotation.x += 0.05;
+    }
+    if(cube.rotation.y < (2 * Math.PI/2)) {
+      cube.rotation.y += 0.05;
+    }
+  }
+  // Faces 5 and 6
+  if(nb == 5 || nb == 6) {
+    if(cube.rotation.x < (2 * Math.PI/2)) {
+      cube.rotation.x += 0.05;
+    }
+    if(cube.rotation.y < ((nb*2-9) * Math.PI/2)) {
+      cube.rotation.y += 0.05;
+    }
+  }
 }
 
