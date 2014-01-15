@@ -6,8 +6,17 @@ var renderer = new THREE.WebGLRenderer();
 var cube = null;
 // Camera
 var camera = null;
-// Rendering functions
-var onRenderFcts = new Array();
+// Rendering function
+var onRender = function() {};
+// Dices faces
+var diceFaces = [
+  [1, 2, 0], 
+  [2, 2, 0], 
+  [3, 2, 0], 
+  [4, 2, 0], 
+  [2, 1, 0], 
+  [2, 3, 0] 
+];
 
 // Launch
 run();
@@ -17,6 +26,7 @@ run();
  */
 function run() {
   init();
+  ihm();
   cam();
   light();
   axes();
@@ -33,9 +43,27 @@ function init() {
   document.body.appendChild( renderer.domElement );
   // Add the first rendering function
   //onRenderFcts.push(rotateCube);
-  onRenderFcts.push(function() { 
-    showFace(6); 
-  });
+  onRender = function() { 
+    showFace(5); 
+  };
+}
+
+/**
+ * Sets the IHM.
+ */
+function ihm() {
+  for(var i=0 ; i<6 ; i++) {
+    var run = document.getElementById("run"+(i+1));
+    // Outer function to unscope i
+    !function outer(i) {
+      run.onclick = function() {
+        console.log("init: "+i);
+        onRender = function() { 
+          showFace(i);
+        };
+      };
+    }(i)
+  }
 }
 
 /**
@@ -137,10 +165,7 @@ function textTexture(text) {
  */
 function render() {
   requestAnimationFrame(render);
-	// call each update function
-	onRenderFcts.forEach(function(onRenderFct){
-	  onRenderFct();
-	})
+	onRender();
   renderer.render(scene, camera);
 }
 
@@ -160,23 +185,28 @@ function rotateCube() {
  * @param endCallback Function to call after the end
  */
 function showFace(nb, endCallback) {
-  // Faces 1 to 4
-  if(nb > 0 && nb < 5) {
-    if(cube.rotation.x < (nb * Math.PI/2)) {
-      cube.rotation.x += 0.05;
-    }
-    if(cube.rotation.y < (2 * Math.PI/2)) {
-      cube.rotation.y += 0.05;
-    }
+  var x = diceFaces[nb][0];
+  var y = diceFaces[nb][1];
+  var z = diceFaces[nb][2];
+  var d = 0.03;
+  if(cube.rotation.x < (x * Math.PI/2)) {
+    cube.rotation.x += d;
   }
-  // Faces 5 and 6
-  if(nb == 5 || nb == 6) {
-    if(cube.rotation.x < (2 * Math.PI/2)) {
-      cube.rotation.x += 0.05;
-    }
-    if(cube.rotation.y < ((nb*2-9) * Math.PI/2)) {
-      cube.rotation.y += 0.05;
-    }
+  if(cube.rotation.y < (y * Math.PI/2)) {
+    cube.rotation.y += d;
+  }
+  if(cube.rotation.y < (z * Math.PI/2)) {
+    cube.rotation.y += d;
+  }
+  // Reset to 0 if greater than 2PI
+  if(cube.rotation.x >= (2 * Math.PI)) {
+    cube.rotation.x = 0;
+  }
+  if(cube.rotation.y >= (2 * Math.PI)) {
+    cube.rotation.y = 0;
+  }
+  if(cube.rotation.z >= (2 * Math.PI)) {
+    cube.rotation.z = 0;
   }
 }
 
