@@ -3,4 +3,4 @@ dede
 
 Gratter Dédé!
 
-What about moving cam instead of cube...
+[Live](https://rawgithub.com/damiengo/dede/master/index.html)
