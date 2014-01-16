@@ -10,13 +10,17 @@ var camera = null;
 var onRender = function() {};
 // Dices faces
 var diceFaces = [
-  [1, 2, 0], 
-  [2, 2, 0], 
-  [3, 2, 0], 
+  [1, 2, 2], 
+  [2, 2, 2], 
+  [3, 2, 2], 
   [4, 2, 0], 
-  [2, 1, 0], 
-  [2, 3, 0] 
+  [2, 1, 2], 
+  [2, 3, 2] 
 ];
+// Deltas
+var deltaX = 0.05;
+var deltaY = 0.05;
+var deltaZ = 0.05;
 
 // Launch
 run();
@@ -29,7 +33,7 @@ function run() {
   ihm();
   cam();
   light();
-  axes();
+  //axes();
   cub();
   render();
 }
@@ -188,25 +192,33 @@ function showFace(nb, endCallback) {
   var x = diceFaces[nb][0];
   var y = diceFaces[nb][1];
   var z = diceFaces[nb][2];
-  var d = 0.03;
   if(cube.rotation.x < (x * Math.PI/2)) {
-    cube.rotation.x += d;
+    cube.rotation.x += deltaX;
+  }
+  if(cube.rotation.x > (x * Math.PI/2)) {
+    cube.rotation.x -= deltaX;
   }
   if(cube.rotation.y < (y * Math.PI/2)) {
-    cube.rotation.y += d;
+    cube.rotation.y += deltaY;
   }
-  if(cube.rotation.y < (z * Math.PI/2)) {
-    cube.rotation.y += d;
+  if(cube.rotation.y > (y * Math.PI/2)) {
+    cube.rotation.y -= deltaY;
   }
-  // Reset to 0 if greater than 2PI
-  if(cube.rotation.x >= (2 * Math.PI)) {
-    cube.rotation.x = 0;
+  if(cube.rotation.z < (z * Math.PI/2)) {
+    cube.rotation.z += deltaZ;
   }
-  if(cube.rotation.y >= (2 * Math.PI)) {
-    cube.rotation.y = 0;
+  if(cube.rotation.z > (z * Math.PI/2)) {
+    cube.rotation.z -= deltaZ;
   }
-  if(cube.rotation.z >= (2 * Math.PI)) {
-    cube.rotation.z = 0;
+  // If arrived
+  if(Math.abs((x * Math.PI/2) - cube.rotation.x) < deltaX) {
+    cube.rotation.x = x * Math.PI/2;
+  }
+  if(Math.abs((y * Math.PI/2) - cube.rotation.y) < deltaY) {
+    cube.rotation.y = y * Math.PI/2;
+  }
+  if(Math.abs((z * Math.PI/2) - cube.rotation.z) < deltaZ) {
+    cube.rotation.z = z * Math.PI/2;
   }
 }
 
