@@ -48,7 +48,13 @@ var Dice = (function(THREE) {
 
     cube = new THREE.Mesh( geometry, cubeMaterial );
     scene.add( cube );
+
+    // Renderable
+    this.setOnRender(this.rotateCube);
   }
+
+  /* Dice extends Renderable */
+  Dice.prototype = new Renderable();
 
   /**
    * Creates a texture with a text.
@@ -80,6 +86,16 @@ var Dice = (function(THREE) {
     cube.rotation.x += 0.01;
     cube.rotation.y += 0.03;
     cube.rotation.z += 0.05;
+    // Reset if greater than 2 PI
+    if(cube.rotation.x > (2*Math.PI)) {
+      cube.rotation.x = 0;
+    }
+    if(cube.rotation.y > (2*Math.PI)) {
+      cube.rotation.y = 0;
+    }
+    if(cube.rotation.z > (2*Math.PI)) {
+      cube.rotation.z = 0;
+    }
   }
 
   /**

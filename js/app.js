@@ -8,7 +8,6 @@ var App = (function(THREE) {
   var scene    = null;
   var renderer = null;
   var camera   = null;
-  var onRender = null;
   var dice     = null;
 
   /**
@@ -18,7 +17,6 @@ var App = (function(THREE) {
     scene    = new THREE.Scene();
     renderer = new THREE.WebGLRenderer();
     camera   = null;
-    onRender = function() {};
   }
 
   /**
@@ -40,9 +38,6 @@ var App = (function(THREE) {
     renderer.setSize( window.innerWidth-30, window.innerHeight-30 );
     renderer.setClearColor( 0xffffff, 0 );
     document.body.appendChild( renderer.domElement );
-    onRender = function() { 
-      dice.showFace(5);
-    };
   }
 
   /**
@@ -54,10 +49,9 @@ var App = (function(THREE) {
       // Outer function to unscope i
       !function outer(i) {
         run.onclick = function() {
-          console.log("init: "+i);
-          onRender = function() { 
+          dice.setOnRender(function() {
             dice.showFace(i);
-          };
+          });
         };
       }(i)
     }
@@ -119,7 +113,7 @@ var App = (function(THREE) {
    */
   var render = function() {
     requestAnimationFrame(render);
-    onRender();
+    dice.render();
     renderer.render(scene, camera);
   }
 
