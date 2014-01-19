@@ -44,17 +44,20 @@ var App = (function(THREE) {
    * Sets the IHM.
    */
   var ihm = function() {
-    for(var i=0 ; i<6 ; i++) {
-      var run = document.getElementById("run"+(i+1));
-      // Outer function to unscope i
-      !function outer(i) {
-        run.onclick = function() {
-          dice.setOnRender(function() {
-            dice.showFace(i);
-          });
-        };
-      }(i)
-    }
+    var go = document.getElementById("run");
+    go.onclick = function() {
+      // Rotate
+      dice.setOnRender(function() {
+        dice.rotateCube();
+      });
+      // Show alea faces
+      setTimeout(function(){
+        var nb = Math.floor((Math.random()*6));
+        dice.setOnRender(function() {
+          dice.showFace(nb);
+        });
+      }, 3000);
+    };
   }
 
   /**
