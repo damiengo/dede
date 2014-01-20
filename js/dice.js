@@ -78,7 +78,8 @@ var Dice = (function(THREE) {
     context.fillRect(0,0,300,150);
     context.fillStyle = "rgba(255,255,255,1)";
     context.font = "Bold 60px Arial";
-    context.fillText(text, 130, 100);
+    var textWidth = context.measureText(text).width;
+    context.fillText(text, 150 - textWidth/2, 100);
     
     // canvas contents will be used for a texture
     var texture = new THREE.Texture(canvas); 
