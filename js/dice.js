@@ -10,13 +10,16 @@ var Dice = (function(THREE) {
   var deltaX    = null;
   var deltaY    = null;
   var deltaZ    = null;  
+  var color     = null;
 
   /**
    * Constructor.
    *
-   * @param scene
+   * @param pScene
+   * @param pColor
+   * @param pNumbers
    */
-  function Dice(pScene) {
+  function Dice(pScene, pColor, pNumbers) {
     scene = pScene;
 
     // Dices faces
@@ -33,16 +36,21 @@ var Dice = (function(THREE) {
     deltaY = 0.05;
     deltaZ = 0.05;
 
+    // Color
+    color = pColor || "0000ff";
+
     // Init
     var geometry = new THREE.CubeGeometry(2,2,2);
 
+    var numbers = pNumbers || [1, 2, 3, 4, 5, 6];
+
     var materials = [];
-    materials.push(new THREE.MeshLambertMaterial({ map: textTexture("1") })); // right face
-    materials.push(new THREE.MeshLambertMaterial({ map: textTexture("2") })); // left face
-    materials.push(new THREE.MeshLambertMaterial({ map: textTexture("3") })); // top face
-    materials.push(new THREE.MeshLambertMaterial({ map: textTexture("4") })); // bottom face
-    materials.push(new THREE.MeshLambertMaterial({ map: textTexture("5") })); // front face
-    materials.push(new THREE.MeshLambertMaterial({ map: textTexture("6") })); // back face
+    materials.push(new THREE.MeshLambertMaterial({ map: textTexture(numbers[0]) })); // right face
+    materials.push(new THREE.MeshLambertMaterial({ map: textTexture(numbers[1]) })); // left face
+    materials.push(new THREE.MeshLambertMaterial({ map: textTexture(numbers[2]) })); // top face
+    materials.push(new THREE.MeshLambertMaterial({ map: textTexture(numbers[3]) })); // bottom face
+    materials.push(new THREE.MeshLambertMaterial({ map: textTexture(numbers[4]) })); // front face
+    materials.push(new THREE.MeshLambertMaterial({ map: textTexture(numbers[5]) })); // back face
 
     var cubeMaterial = new THREE.MeshFaceMaterial(materials);
 
@@ -66,7 +74,7 @@ var Dice = (function(THREE) {
   var textTexture = function (text) {
     var canvas = document.createElement('canvas');
     var context = canvas.getContext('2d');
-    context.fillStyle= "#0000ff";
+    context.fillStyle = "#"+color;
     context.fillRect(0,0,300,150);
     context.fillStyle = "rgba(255,255,255,1)";
     context.font = "Bold 60px Arial";

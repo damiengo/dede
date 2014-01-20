@@ -27,7 +27,7 @@ var App = (function(THREE) {
     ihm();
     cam();
     light();
-    dice = new Dice(scene);    
+    dice = new Dice(scene, "00ff00", [7, 8, 9, 10, 11, 12]);
     render();
   }
 
