@@ -44,17 +44,8 @@ var Dice = (function(THREE) {
 
     var numbers = pNumbers || [1, 2, 3, 4, 5, 6];
 
-    var materials = [];
-    materials.push(new THREE.MeshLambertMaterial({ map: textTexture(numbers[0]) })); // right face
-    materials.push(new THREE.MeshLambertMaterial({ map: textTexture(numbers[1]) })); // left face
-    materials.push(new THREE.MeshLambertMaterial({ map: textTexture(numbers[2]) })); // top face
-    materials.push(new THREE.MeshLambertMaterial({ map: textTexture(numbers[3]) })); // bottom face
-    materials.push(new THREE.MeshLambertMaterial({ map: textTexture(numbers[4]) })); // front face
-    materials.push(new THREE.MeshLambertMaterial({ map: textTexture(numbers[5]) })); // back face
-
-    var cubeMaterial = new THREE.MeshFaceMaterial(materials);
-
-    cube = new THREE.Mesh( geometry, cubeMaterial );
+    cube = new THREE.Mesh( geometry );
+    this.setFaces(numbers);
     scene.add( cube );
 
     // Renderable
@@ -86,6 +77,24 @@ var Dice = (function(THREE) {
     texture.needsUpdate = true;
 
     return texture;
+  }
+
+  /**
+   * Set the dice faces.
+   *
+   * @param numbers
+   */
+  Dice.prototype.setFaces = function(numbers) {
+    var materials = [];
+    materials.push(new THREE.MeshLambertMaterial({ map: textTexture(numbers[0]) })); // right face
+    materials.push(new THREE.MeshLambertMaterial({ map: textTexture(numbers[1]) })); // left face
+    materials.push(new THREE.MeshLambertMaterial({ map: textTexture(numbers[2]) })); // top face
+    materials.push(new THREE.MeshLambertMaterial({ map: textTexture(numbers[3]) })); // bottom face
+    materials.push(new THREE.MeshLambertMaterial({ map: textTexture(numbers[4]) })); // front face
+    materials.push(new THREE.MeshLambertMaterial({ map: textTexture(numbers[5]) })); // back face
+
+    var cubeMaterial = new THREE.MeshFaceMaterial(materials);
+    cube.material = cubeMaterial;
   }
 
   /**

@@ -5,10 +5,12 @@
 var App = (function(THREE) {
 
   /* Class vars */
-  var scene    = null;
-  var renderer = null;
-  var camera   = null;
-  var dice     = null;
+  var scene             = null;
+  var renderer          = null;
+  var camera            = null;
+  var dice              = null;
+  var configElem        = null;
+  var configNumbersElem = null;
 
   /**
    * Constructor.
@@ -23,6 +25,8 @@ var App = (function(THREE) {
    * The runner.
    */
   App.prototype.run = function() {
+    initElems();
+    initConfig();
     init();
     ihm();
     cam();
@@ -38,6 +42,37 @@ var App = (function(THREE) {
     renderer.setSize( window.innerWidth-30, window.innerHeight-30 );
     renderer.setClearColor( 0xffffff, 0 );
     document.body.appendChild( renderer.domElement );
+  }
+
+  /**
+   * Initialize elements.
+   */
+  var initElems = function() {
+    configElem        = document.getElementById("config");
+    configNumbersElem = document.getElementById("config-numbers");
+  }
+
+  /**
+   * Initialize configuration.
+   */
+  var initConfig = function() {
+    var inputElem = null;
+    var labelElem = null;
+    var liElem    = null;
+    var numbers   = 20;
+    for(var i=0 ; i<numbers ; i++) {
+      inputElem = document.createElement("input");
+      inputElem.type = "checkbox";
+      inputElem.id = "config-numbers-"+i;
+      inputElem.checked = true;
+      labelElem = document.createElement("label");
+      labelElem.htmlFor= "config-numbers-"+i;
+      labelElem.innerHTML = i+1;
+      liElem = document.createElement("li");
+      liElem.appendChild(inputElem);
+      liElem.appendChild(labelElem);
+      configNumbersElem.appendChild(liElem);
+    }
   }
 
   /**
