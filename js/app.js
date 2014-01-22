@@ -76,11 +76,33 @@ var App = (function(THREE) {
   }
 
   /**
+   * Get checkeds boxes.
+   */
+  var getCheckeds = function() {
+    var inputs = document.getElementsByTagName("input");
+    var inputsLength = inputs.length;
+    var checkeds = new Array();
+    for(var i=0 ; i< inputsLength ; i++) {
+      if(inputs[i].type == "checkbox" && inputs[i].checked) {
+        checkeds.push(i);
+      }
+    }
+
+    return checkeds;
+  }
+
+  /**
    * Sets the IHM.
    */
   var ihm = function() {
     var go = document.getElementById("run");
     go.onclick = function() {
+      var checkeds = getCheckeds();
+      checkeds.sort( function() { return 0.5 - Math.random() } );
+      var num = checkeds.map(function(checked) {
+        return checked+1;
+      });
+      dice.setFaces(num);
       // Rotate
       dice.setOnRender(function() {
         dice.rotateCube();
