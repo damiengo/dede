@@ -102,6 +102,9 @@ var App = (function(THREE) {
       var num = checkeds.map(function(checked) {
         return checked+1;
       });
+      if(num.length < 6) {
+        num = num.concat(num).concat(num).concat(num).concat(num).concat(num);
+      }
       dice.setFaces(num);
       // Rotate
       dice.setOnRender(function() {
