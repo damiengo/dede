@@ -98,8 +98,9 @@ var App = (function(THREE) {
     var go = document.getElementById("run");
     go.onclick = function() {
       var checkeds = getCheckeds();
-      checkeds.sort( function() { return 0.5 - Math.random() } );
-      var num = checkeds.map(function(checked) {
+      var num = checkeds;
+      num.sort( function() { return 0.5 - Math.random() } );
+      num = num.map(function(checked) {
         return checked+1;
       });
       if(num.length < 6) {
@@ -114,7 +115,9 @@ var App = (function(THREE) {
       setTimeout(function(){
         var nb = Math.floor((Math.random()*6));
         dice.setOnRender(function() {
-          dice.showFace(nb);
+          dice.showFace(nb, function() {
+            document.getElementById("config-numbers-"+(num[nb]-1)).checked = false;
+          });
         });
       }, 3000);
     };

@@ -5,12 +5,13 @@
 var Dice = (function(THREE) {
 
   /* Class vars */
-  var scene     = null;
-  var diceFaces = null;
-  var deltaX    = null;
-  var deltaY    = null;
-  var deltaZ    = null;  
-  var color     = null;
+  var scene       = null;
+  var diceFaces   = null;
+  var deltaX      = null;
+  var deltaY      = null;
+  var deltaZ      = null;  
+  var color       = null;
+  var faceNumbers = null;
 
   /**
    * Constructor.
@@ -43,6 +44,7 @@ var Dice = (function(THREE) {
     var geometry = new THREE.CubeGeometry(2,2,2);
 
     var numbers = pNumbers || [1, 2, 3, 4, 5, 6];
+    faceNumbers = numbers;
 
     cube = new THREE.Mesh( geometry );
     this.setFaces(numbers);
@@ -86,12 +88,12 @@ var Dice = (function(THREE) {
    */
   Dice.prototype.setFaces = function(numbers) {
     var materials = [];
-    materials.push(new THREE.MeshLambertMaterial({ map: textTexture(numbers[0]) })); // right face
-    materials.push(new THREE.MeshLambertMaterial({ map: textTexture(numbers[1]) })); // left face
+    materials.push(new THREE.MeshLambertMaterial({ map: textTexture(numbers[5]) })); // right face
+    materials.push(new THREE.MeshLambertMaterial({ map: textTexture(numbers[4]) })); // left face
     materials.push(new THREE.MeshLambertMaterial({ map: textTexture(numbers[2]) })); // top face
-    materials.push(new THREE.MeshLambertMaterial({ map: textTexture(numbers[3]) })); // bottom face
-    materials.push(new THREE.MeshLambertMaterial({ map: textTexture(numbers[4]) })); // front face
-    materials.push(new THREE.MeshLambertMaterial({ map: textTexture(numbers[5]) })); // back face
+    materials.push(new THREE.MeshLambertMaterial({ map: textTexture(numbers[0]) })); // bottom face
+    materials.push(new THREE.MeshLambertMaterial({ map: textTexture(numbers[1]) })); // front face
+    materials.push(new THREE.MeshLambertMaterial({ map: textTexture(numbers[3]) })); // back face
 
     var cubeMaterial = new THREE.MeshFaceMaterial(materials);
     cube.material = cubeMaterial;
@@ -145,14 +147,27 @@ var Dice = (function(THREE) {
       cube.rotation.z -= deltaZ;
     }
     // If arrived
+    var arrived = true;
     if(Math.abs((x * Math.PI/2) - cube.rotation.x) < deltaX) {
       cube.rotation.x = x * Math.PI/2;
+    }
+    else {
+      arrived = false;
     }
     if(Math.abs((y * Math.PI/2) - cube.rotation.y) < deltaY) {
       cube.rotation.y = y * Math.PI/2;
     }
+    else {
+      arrived = false;
+    }
     if(Math.abs((z * Math.PI/2) - cube.rotation.z) < deltaZ) {
       cube.rotation.z = z * Math.PI/2;
+    }
+    else {
+      arrived = false;
+    }
+    if(arrived) {
+      if(endCallback) endCallback();
     }
   }
 
