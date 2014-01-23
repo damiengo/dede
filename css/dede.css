@@ -17,6 +17,8 @@ canvas {
 }
 
 #config-numbers {
+  width: 900px;
+  margin: 0 auto;
   overflow: hidden;
   font-size: 20px;
 }
@@ -24,5 +26,49 @@ canvas {
 #config-numbers li {
   float: left;
   margin-left: 20px;
+}
+
+#runner {
+  width: 900px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+/* -------------------------------- */
+
+button {
+  cursor: pointer;
+  font-family: "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
+  font-weight: normal;
+  line-height: normal;
+  position: relative;
+  text-decoration: none;
+  text-align: center;
+  display: inline-block;
+  padding-top: 1rem;
+  padding-right: 1.5rem;
+  padding-bottom: 1.0625rem;
+  padding-left: 1.5rem;
+  font-size: 1rem;
+  /*     @else                            { font-size: $padding - rem-calc(2); } */
+  background-color: #008cba;
+  border-color: #0079a1;
+  color: white;
+  -webkit-transition: background-color 300ms ease-out;
+  -moz-transition: background-color 300ms ease-out;
+  transition: background-color 300ms ease-out;
+  padding-top: 1.0625rem;
+  padding-bottom: 1rem;
+  -webkit-appearance: none;
+  border: none;
+  font-weight: normal !important;
+}
+
+button:hover, button:focus {
+  background-color: #0079a1;
+}
+  
+button:hover, button:focus {
+  color: white;
 }
 
