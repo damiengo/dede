@@ -7,6 +7,7 @@ var App = (function(THREE) {
   /* Class vars */
   var view              = null;
   var dice              = null;
+  var spot              = null;
   var configElem        = null;
   var configNumbersElem = null;
 
@@ -26,7 +27,9 @@ var App = (function(THREE) {
     // Set view elements
     view = new View();
     dice = new Dice("0079a1");
+    spot = new Spot();
     view.addRenderable(dice);
+    view.addRenderable(spot);
   }
 
   /**
@@ -103,6 +106,10 @@ var App = (function(THREE) {
           dice.showFace(nb, function() {
             document.getElementById("config-numbers-"+(num[nb]-1)).checked = false;
             dice.clearRender();
+            // Change spot rendering
+            spot.setOnRender(function() {
+              spot.highlight();
+            });
           });
         });
       }, 3000);

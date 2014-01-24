@@ -22,6 +22,7 @@ var View = (function(THREE) {
   	init();
     cam();
     light();
+    stats();
     render();
   }
 
@@ -42,39 +43,6 @@ var View = (function(THREE) {
     renderer.setSize( window.innerWidth-30, window.innerHeight-30 );
     renderer.setClearColor( 0xffffff, 0 );
     document.body.appendChild( renderer.domElement );
-  }
-
-  /**
-   * Sets the IHM.
-   */
-  var ihm = function() {
-    var go = document.getElementById("run");
-    go.onclick = function() {
-      var checkeds = getCheckeds();
-      var num = checkeds;
-      num.sort( function() { return 0.5 - Math.random() } );
-      num = num.map(function(checked) {
-        return checked+1;
-      });
-      if(num.length < 6) {
-        num = num.concat(num).concat(num).concat(num).concat(num).concat(num);
-      }
-      dice.setFaces(num);
-      // Rotate
-      dice.setOnRender(function() {
-        dice.rotateCube();
-      });
-      // Show alea faces
-      setTimeout(function(){
-        var nb = Math.floor((Math.random()*6));
-        dice.setOnRender(function() {
-          dice.showFace(nb, function() {
-            document.getElementById("config-numbers-"+(num[nb]-1)).checked = false;
-            dice.clearRender();
-          });
-        });
-      }, 3000);
-    };
   }
 
   /**
@@ -126,6 +94,27 @@ var View = (function(THREE) {
     zGeometry.vertices.push(new THREE.Vector3(0, 0, 3));
     var zLine = new THREE.Line(zGeometry, zMaterial);
     scene.add(zLine);
+  }
+
+  /**
+   * Displays stats.
+   */
+  var stats = function() {
+  	var stats = new Stats();
+	stats.setMode(0); // 0: fps, 1: ms
+
+	// Align top-left
+	stats.domElement.style.position = 'absolute';
+	stats.domElement.style.left = '0px';
+	stats.domElement.style.top = '0px';
+
+	document.body.appendChild( stats.domElement );
+
+	setInterval( function () {
+	    stats.begin();
+	    stats.end();
+    }, 1000 / 60 );
+
   }
 
   /**
