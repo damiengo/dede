@@ -7,6 +7,9 @@ var Renderable = (function() {
   /* Function to call on render */
   var onRender = null;
 
+  /* The scene object */
+  var sceneObject = null;
+
   /**
    * A renderable objet.
    */
@@ -21,6 +24,29 @@ var Renderable = (function() {
    */
   Renderable.prototype.setOnRender = function(fn) {
     onRender = fn;
+  }
+
+  /**
+   * Clears the render function.
+   */
+  Renderable.prototype.clearRender = function() {
+    onRender = function() {};
+  }
+
+  /**
+   * Sets the scene object.
+   *
+   * @param o
+   */
+  Renderable.prototype.setSceneObject = function(o) {
+    sceneObject = o;
+  }
+
+  /**
+   * Gets the scene object.
+   */
+  Renderable.prototype.getSceneObject = function() {
+    return sceneObject;
   }
 
   /**

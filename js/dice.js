@@ -5,23 +5,21 @@
 var Dice = (function(THREE) {
 
   /* Class vars */
-  var scene       = null;
   var diceFaces   = null;
   var deltaX      = null;
   var deltaY      = null;
   var deltaZ      = null;  
   var color       = null;
   var faceNumbers = null;
+  var cube        = null;
 
   /**
    * Constructor.
    *
-   * @param pScene
    * @param pColor
    * @param pNumbers
    */
-  function Dice(pScene, pColor, pNumbers) {
-    scene = pScene;
+  var Dice = function(pColor, pNumbers) {
 
     // Dices faces
     diceFaces = [
@@ -47,11 +45,8 @@ var Dice = (function(THREE) {
     faceNumbers = numbers;
 
     cube = new THREE.Mesh( geometry );
+    this.setSceneObject(cube);
     this.setFaces(numbers);
-    scene.add( cube );
-
-    // Renderable
-    this.setOnRender(this.rotateCube);
   }
 
   /* Dice extends Renderable */

@@ -5,9 +5,7 @@
 var App = (function(THREE) {
 
   /* Class vars */
-  var scene             = null;
-  var renderer          = null;
-  var camera            = null;
+  var view              = null;
   var dice              = null;
   var configElem        = null;
   var configNumbersElem = null;
@@ -16,9 +14,6 @@ var App = (function(THREE) {
    * Constructor.
    */
   function App() {
-    scene    = new THREE.Scene();
-    renderer = new THREE.WebGLRenderer();
-    camera   = null;
   }
 
   /**
@@ -27,21 +22,11 @@ var App = (function(THREE) {
   App.prototype.run = function() {
     initElems();
     initConfig();
-    init();
     ihm();
-    cam();
-    light();
-    dice = new Dice(scene, "0079a1");
-    render();
-  }
-
-  /**
-   * Creates scene.
-   */
-  var init = function() {
-    renderer.setSize( window.innerWidth-30, window.innerHeight-30 );
-    renderer.setClearColor( 0xffffff, 0 );
-    document.body.appendChild( renderer.domElement );
+    // Set view elements
+    view = new View();
+    dice = new Dice("0079a1");
+    view.addRenderable(dice);
   }
 
   /**
@@ -117,70 +102,11 @@ var App = (function(THREE) {
         dice.setOnRender(function() {
           dice.showFace(nb, function() {
             document.getElementById("config-numbers-"+(num[nb]-1)).checked = false;
+            dice.clearRender();
           });
         });
       }, 3000);
     };
-  }
-
-  /**
-   * Creates camera.
-   */
-  var cam = function() {
-    camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
-    camera.position.z = 5;
-  }
-
-  /**
-   * Creates light.
-   */
-  var light = function() {
-    // create a point light
-    var pointLight = new THREE.PointLight(0xFFFFFF);
-
-    // set its position
-    pointLight.position.x = 10;
-    pointLight.position.y = 50;
-    pointLight.position.z = 130;
-
-    // add to the scene
-    scene.add(pointLight);
-  }
-
-  /**
-   * Creates axes.
-   */
-  var axes = function() {
-    // X axe
-    var xMaterial = new THREE.LineBasicMaterial({color: 0xff0000});
-    var xGeometry = new THREE.Geometry();
-    xGeometry.vertices.push(new THREE.Vector3(-3, 0, 0));
-    xGeometry.vertices.push(new THREE.Vector3( 3, 0, 0));
-    var xLine = new THREE.Line(xGeometry, xMaterial);
-    scene.add(xLine);
-    // Y axe
-    var yMaterial = new THREE.LineBasicMaterial({color: 0x00ffff});
-    var yGeometry = new THREE.Geometry();
-    yGeometry.vertices.push(new THREE.Vector3(0,-3, 0));
-    yGeometry.vertices.push(new THREE.Vector3(0, 3, 0));
-    var yLine = new THREE.Line(yGeometry, yMaterial);
-    scene.add(yLine);
-    // Z axe
-    var zMaterial = new THREE.LineBasicMaterial({color: 0x00ffff});
-    var zGeometry = new THREE.Geometry();
-    zGeometry.vertices.push(new THREE.Vector3(0, 0,-3));
-    zGeometry.vertices.push(new THREE.Vector3(0, 0, 3));
-    var zLine = new THREE.Line(zGeometry, zMaterial);
-    scene.add(zLine);
-  }
-
-  /**
-   * Renders.
-   */
-  var render = function() {
-    requestAnimationFrame(render);
-    dice.render();
-    renderer.render(scene, camera);
   }
 
   return App;
