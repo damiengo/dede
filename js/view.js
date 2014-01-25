@@ -21,7 +21,7 @@ var View = (function(THREE) {
   	init();
     cam();
     light();
-    axes();
+    //axes();
     stats();
     this.render();
   }
