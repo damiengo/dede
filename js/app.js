@@ -30,6 +30,7 @@ var App = (function(THREE) {
     spot = new Spot();
     view.addRenderable(dice);
     view.addRenderable(spot);
+    console.log(view);
   }
 
   /**

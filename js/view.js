@@ -8,22 +8,21 @@ var View = (function(THREE) {
   var scene             = null;
   var renderer          = null;
   var camera            = null;
-  var renderables       = null;
 
   /**
    * Constructor.
    */
   var View = function() {
-    scene       = new THREE.Scene();
-    renderer    = new THREE.WebGLRenderer();
-    renderables = [];
+    scene            = new THREE.Scene();
+    renderer         = new THREE.WebGLRenderer();
+    this.renderables = [];
 
     // Init
   	init();
     cam();
     light();
     stats();
-    render();
+    this.render();
   }
 
   /**
@@ -33,7 +32,7 @@ var View = (function(THREE) {
    */
   View.prototype.addRenderable = function(renderable) {
     scene.add(renderable.getSceneObject());
-    renderables.push(renderable);
+    this.renderables.push(renderable);
   }
 
   /**
@@ -101,30 +100,31 @@ var View = (function(THREE) {
    */
   var stats = function() {
   	var stats = new Stats();
-	stats.setMode(0); // 0: fps, 1: ms
+  	stats.setMode(0); // 0: fps, 1: ms
 
-	// Align top-left
-	stats.domElement.style.position = 'absolute';
-	stats.domElement.style.left = '0px';
-	stats.domElement.style.top = '0px';
+  	// Align top-left
+  	stats.domElement.style.position = 'absolute';
+  	stats.domElement.style.left = '0px';
+  	stats.domElement.style.top = '0px';
 
-	document.body.appendChild( stats.domElement );
+  	document.body.appendChild( stats.domElement );
 
-	setInterval( function () {
-	    stats.begin();
-	    stats.end();
-    }, 1000 / 60 );
+  	setInterval( function () {
+  	    stats.begin();
+  	    stats.end();
+      }, 1000 / 60 );
 
   }
 
   /**
    * Renders.
    */
-  var render = function() {
-    requestAnimationFrame(render);
-    var rLength = renderables.length;
+  View.prototype.render = function() {
+    var vi = this;
+    requestAnimationFrame(function() { vi.render(); });
+    var rLength = this.renderables.length;
     for(var i=0 ; i<rLength ; i++) {
-      renderables[i].render();
+      this.renderables[i].render();
     }
     renderer.render(scene, camera);
   }

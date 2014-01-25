@@ -31,9 +31,9 @@ var Dice = (function(THREE) {
       [2, 3, 2] 
     ];
     // Deltas
-    deltaX = 0.05;
-    deltaY = 0.05;
-    deltaZ = 0.05;
+    deltaX = 0.04;
+    deltaY = 0.04;
+    deltaZ = 0.04;
 
     // Color
     color = pColor || "0000ff";
@@ -98,9 +98,9 @@ var Dice = (function(THREE) {
    * Function to rotate the cube.
    */
   Dice.prototype.rotateCube = function() {
-    cube.rotation.x += 0.01;
-    cube.rotation.y += 0.03;
-    cube.rotation.z += 0.05;
+    cube.rotation.x += deltaX;
+    cube.rotation.y += deltaY;
+    cube.rotation.z += deltaZ;
     // Reset if greater than 2 PI
     if(cube.rotation.x > (2*Math.PI)) {
       cube.rotation.x = 0;

@@ -4,17 +4,12 @@
 
 var Renderable = (function() {
 
-  /* Function to call on render */
-  var onRender = null;
-
-  /* The scene object */
-  var sceneObject = null;
-
   /**
    * A renderable objet.
    */
   function Renderable() {
-    onRender = function() {};
+    this.onRender    = function() {};
+    this.sceneObject = null;
   }
 
   /**
@@ -23,14 +18,14 @@ var Renderable = (function() {
    * @param fn
    */
   Renderable.prototype.setOnRender = function(fn) {
-    onRender = fn;
+    this.onRender = fn;
   }
 
   /**
    * Clears the render function.
    */
   Renderable.prototype.clearRender = function() {
-    onRender = function() {};
+    this.onRender = function() {};
   }
 
   /**
@@ -39,21 +34,21 @@ var Renderable = (function() {
    * @param o
    */
   Renderable.prototype.setSceneObject = function(o) {
-    sceneObject = o;
+    this.sceneObject = o;
   }
 
   /**
    * Gets the scene object.
    */
   Renderable.prototype.getSceneObject = function() {
-    return sceneObject;
+    return this.sceneObject;
   }
 
   /**
    * Renders the object.
    */
   Renderable.prototype.render = function() {
-    onRender();
+    this.onRender();
   }
 
   return Renderable;
