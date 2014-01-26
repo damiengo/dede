@@ -8,6 +8,7 @@ var View = (function(THREE) {
   var scene             = null;
   var renderer          = null;
   var camera            = null;
+  var clock             = null;
 
   /**
    * Constructor.
@@ -15,6 +16,7 @@ var View = (function(THREE) {
   var View = function() {
     scene            = new THREE.Scene();
     renderer         = new THREE.WebGLRenderer();
+    clock            = new THREE.Clock();
     this.renderables = [];
 
     // Init
@@ -121,11 +123,12 @@ var View = (function(THREE) {
    * Renders.
    */
   View.prototype.render = function() {
+    var delta = clock.getDelta();
     var vi = this;
     requestAnimationFrame(function() { vi.render(); });
     var rLength = this.renderables.length;
     for(var i=0 ; i<rLength ; i++) {
-      this.renderables[i].render();
+      this.renderables[i].render(delta);
     }
     renderer.render(scene, camera);
   }

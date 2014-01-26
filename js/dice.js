@@ -31,9 +31,9 @@ var Dice = (function(THREE) {
       [2, 3, 2] 
     ];
     // Deltas
-    deltaX = 0.04;
-    deltaY = 0.04;
-    deltaZ = 0.04;
+    deltaX = 0.02;
+    deltaY = 0.02;
+    deltaZ = 0.02;
 
     // Color
     color = pColor || "0000ff";
@@ -96,11 +96,13 @@ var Dice = (function(THREE) {
 
   /**
    * Function to rotate the cube.
+   *
+   * @param deltaTime
    */
-  Dice.prototype.rotateCube = function() {
-    cube.rotation.x += deltaX;
-    cube.rotation.y += deltaY;
-    cube.rotation.z += deltaZ;
+  Dice.prototype.rotateCube = function(deltaTime) {
+    cube.rotation.x += deltaTime + deltaX;
+    cube.rotation.y += deltaTime + deltaY;
+    cube.rotation.z += deltaTime + deltaZ;
     // Reset if greater than 2 PI
     if(cube.rotation.x > (2*Math.PI)) {
       cube.rotation.x = 0;
@@ -117,45 +119,46 @@ var Dice = (function(THREE) {
    * Translate the dice to one face.
    *
    * @param nb          The face number to display
+   * @param deltaTime   The time delta
    * @param endCallback Function to call after the end
    */
-  Dice.prototype.showFace = function(nb, endCallback){
+  Dice.prototype.showFace = function(nb, deltaTime, endCallback){
     var x = diceFaces[nb][0];
     var y = diceFaces[nb][1];
     var z = diceFaces[nb][2];
     if(cube.rotation.x < (x * Math.PI/2)) {
-      cube.rotation.x += deltaX;
+      cube.rotation.x += deltaTime + deltaX;
     }
     if(cube.rotation.x > (x * Math.PI/2)) {
-      cube.rotation.x -= deltaX;
+      cube.rotation.x -= deltaTime + deltaX;
     }
     if(cube.rotation.y < (y * Math.PI/2)) {
-      cube.rotation.y += deltaY;
+      cube.rotation.y += deltaTime + deltaY;
     }
     if(cube.rotation.y > (y * Math.PI/2)) {
-      cube.rotation.y -= deltaY;
+      cube.rotation.y -= deltaTime + deltaY;
     }
     if(cube.rotation.z < (z * Math.PI/2)) {
-      cube.rotation.z += deltaZ;
+      cube.rotation.z += deltaTime + deltaZ;
     }
     if(cube.rotation.z > (z * Math.PI/2)) {
-      cube.rotation.z -= deltaZ;
+      cube.rotation.z -= deltaTime + deltaZ;
     }
     // If arrived
     var arrived = true;
-    if(Math.abs((x * Math.PI/2) - cube.rotation.x) < deltaX) {
+    if(Math.abs((x * Math.PI/2) - cube.rotation.x) < (deltaTime + deltaX)) {
       cube.rotation.x = x * Math.PI/2;
     }
     else {
       arrived = false;
     }
-    if(Math.abs((y * Math.PI/2) - cube.rotation.y) < deltaY) {
+    if(Math.abs((y * Math.PI/2) - cube.rotation.y) < (deltaTime + deltaY)) {
       cube.rotation.y = y * Math.PI/2;
     }
     else {
       arrived = false;
     }
-    if(Math.abs((z * Math.PI/2) - cube.rotation.z) < deltaZ) {
+    if(Math.abs((z * Math.PI/2) - cube.rotation.z) < (deltaTime + deltaZ)) {
       cube.rotation.z = z * Math.PI/2;
     }
     else {

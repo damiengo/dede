@@ -46,9 +46,11 @@ var Renderable = (function() {
 
   /**
    * Renders the object.
+   *
+   * @param delta
    */
-  Renderable.prototype.render = function() {
-    this.onRender();
+  Renderable.prototype.render = function(delta) {
+    this.onRender(delta);
   }
 
   return Renderable;

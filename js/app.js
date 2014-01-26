@@ -30,7 +30,6 @@ var App = (function(THREE) {
     spot = new Spot();
     view.addRenderable(dice);
     view.addRenderable(spot);
-    console.log(view);
   }
 
   /**
@@ -97,19 +96,19 @@ var App = (function(THREE) {
       }
       dice.setFaces(num);
       // Rotate
-      dice.setOnRender(function() {
-        dice.rotateCube();
+      dice.setOnRender(function(delta) {
+        dice.rotateCube(delta);
       });
       // Show alea faces
       setTimeout(function(){
         var nb = Math.floor((Math.random()*6));
-        dice.setOnRender(function() {
-          dice.showFace(nb, function() {
+        dice.setOnRender(function(delta) {
+          dice.showFace(nb, delta, function() {
             document.getElementById("config-numbers-"+(num[nb]-1)).checked = false;
             dice.clearRender();
             // Change spot rendering
-            spot.setOnRender(function() {
-              spot.highlight();
+            spot.setOnRender(function(delta) {
+              spot.highlight(delta);
             });
           });
         });

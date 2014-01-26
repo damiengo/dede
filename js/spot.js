@@ -25,7 +25,7 @@ var Spot = (function(THREE) {
   /**
    * Highlights a field.
    */
-  Spot.prototype.highlight = function() {
+  Spot.prototype.highlight = function(delta) {
     var t = new Date().getTime();
     light.position.x = Math.cos(t/600)*25;
     light.position.y = 60-Math.sin(t/900)*25;
