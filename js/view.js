@@ -22,7 +22,7 @@ var View = (function(THREE) {
     cam();
     light();
     //axes();
-    stats();
+    //stats();
     this.render();
   }
 
