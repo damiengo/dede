@@ -11,7 +11,6 @@ var Dice = (function(THREE) {
   var deltaZ      = null;  
   var color       = null;
   var faceNumbers = null;
-  var cube        = null;
 
   /**
    * Constructor.
@@ -44,8 +43,7 @@ var Dice = (function(THREE) {
     var numbers = pNumbers || [1, 2, 3, 4, 5, 6];
     faceNumbers = numbers;
 
-    cube = new THREE.Mesh( geometry );
-    this.setSceneObject(cube);
+    this.sceneObject = new THREE.Mesh( geometry );
     this.setFaces(numbers);
   }
 
@@ -91,27 +89,27 @@ var Dice = (function(THREE) {
     materials.push(new THREE.MeshLambertMaterial({ map: textTexture(numbers[3]) })); // back face
 
     var cubeMaterial = new THREE.MeshFaceMaterial(materials);
-    cube.material = cubeMaterial;
+    this.sceneObject.material = cubeMaterial;
   }
 
   /**
-   * Function to rotate the cube.
+   * Function to rotate the this.sceneObject.
    *
    * @param deltaTime
    */
   Dice.prototype.rotateCube = function(deltaTime) {
-    cube.rotation.x += deltaTime + deltaX;
-    cube.rotation.y += deltaTime + deltaY;
-    cube.rotation.z += deltaTime + deltaZ;
+    this.sceneObject.rotation.x += deltaTime + deltaX;
+    this.sceneObject.rotation.y += deltaTime + deltaY;
+    this.sceneObject.rotation.z += deltaTime + deltaZ;
     // Reset if greater than 2 PI
-    if(cube.rotation.x > (2*Math.PI)) {
-      cube.rotation.x = 0;
+    if(this.sceneObject.rotation.x > (2*Math.PI)) {
+      this.sceneObject.rotation.x = 0;
     }
-    if(cube.rotation.y > (2*Math.PI)) {
-      cube.rotation.y = 0;
+    if(this.sceneObject.rotation.y > (2*Math.PI)) {
+      this.sceneObject.rotation.y = 0;
     }
-    if(cube.rotation.z > (2*Math.PI)) {
-      cube.rotation.z = 0;
+    if(this.sceneObject.rotation.z > (2*Math.PI)) {
+      this.sceneObject.rotation.z = 0;
     }
   }
 
@@ -126,40 +124,40 @@ var Dice = (function(THREE) {
     var x = diceFaces[nb][0];
     var y = diceFaces[nb][1];
     var z = diceFaces[nb][2];
-    if(cube.rotation.x < (x * Math.PI/2)) {
-      cube.rotation.x += deltaTime + deltaX;
+    if(this.sceneObject.rotation.x < (x * Math.PI/2)) {
+      this.sceneObject.rotation.x += deltaTime + deltaX;
     }
-    if(cube.rotation.x > (x * Math.PI/2)) {
-      cube.rotation.x -= deltaTime + deltaX;
+    if(this.sceneObject.rotation.x > (x * Math.PI/2)) {
+      this.sceneObject.rotation.x -= deltaTime + deltaX;
     }
-    if(cube.rotation.y < (y * Math.PI/2)) {
-      cube.rotation.y += deltaTime + deltaY;
+    if(this.sceneObject.rotation.y < (y * Math.PI/2)) {
+      this.sceneObject.rotation.y += deltaTime + deltaY;
     }
-    if(cube.rotation.y > (y * Math.PI/2)) {
-      cube.rotation.y -= deltaTime + deltaY;
+    if(this.sceneObject.rotation.y > (y * Math.PI/2)) {
+      this.sceneObject.rotation.y -= deltaTime + deltaY;
     }
-    if(cube.rotation.z < (z * Math.PI/2)) {
-      cube.rotation.z += deltaTime + deltaZ;
+    if(this.sceneObject.rotation.z < (z * Math.PI/2)) {
+      this.sceneObject.rotation.z += deltaTime + deltaZ;
     }
-    if(cube.rotation.z > (z * Math.PI/2)) {
-      cube.rotation.z -= deltaTime + deltaZ;
+    if(this.sceneObject.rotation.z > (z * Math.PI/2)) {
+      this.sceneObject.rotation.z -= deltaTime + deltaZ;
     }
     // If arrived
     var arrived = true;
-    if(Math.abs((x * Math.PI/2) - cube.rotation.x) < (deltaTime + deltaX)) {
-      cube.rotation.x = x * Math.PI/2;
+    if(Math.abs((x * Math.PI/2) - this.sceneObject.rotation.x) < (deltaTime + deltaX)) {
+      this.sceneObject.rotation.x = x * Math.PI/2;
     }
     else {
       arrived = false;
     }
-    if(Math.abs((y * Math.PI/2) - cube.rotation.y) < (deltaTime + deltaY)) {
-      cube.rotation.y = y * Math.PI/2;
+    if(Math.abs((y * Math.PI/2) - this.sceneObject.rotation.y) < (deltaTime + deltaY)) {
+      this.sceneObject.rotation.y = y * Math.PI/2;
     }
     else {
       arrived = false;
     }
-    if(Math.abs((z * Math.PI/2) - cube.rotation.z) < (deltaTime + deltaZ)) {
-      cube.rotation.z = z * Math.PI/2;
+    if(Math.abs((z * Math.PI/2) - this.sceneObject.rotation.z) < (deltaTime + deltaZ)) {
+      this.sceneObject.rotation.z = z * Math.PI/2;
     }
     else {
       arrived = false;
