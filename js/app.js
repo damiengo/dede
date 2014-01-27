@@ -104,7 +104,10 @@ var App = (function(THREE) {
         var nb = Math.floor((Math.random()*6));
         dice.setOnRender(function(delta) {
           dice.showFace(nb, delta, function() {
-            document.getElementById("config-numbers-"+(num[nb]-1)).checked = false;
+            var elem = document.getElementById("config-numbers-"+(num[nb]-1));
+            if(elem) {
+              elem.checked = false;
+            }
             dice.clearRender();
             // Change spot rendering
             spot.setOnRender(function(delta) {
