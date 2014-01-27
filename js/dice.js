@@ -4,14 +4,6 @@
 
 var Dice = (function(THREE) {
 
-  /* Class vars */
-  var diceFaces   = null;
-  var deltaX      = null;
-  var deltaY      = null;
-  var deltaZ      = null;  
-  var color       = null;
-  var faceNumbers = null;
-
   /**
    * Constructor.
    *
@@ -21,7 +13,7 @@ var Dice = (function(THREE) {
   var Dice = function(pColor, pNumbers) {
 
     // Dices faces
-    diceFaces = [
+    this.diceFaces = [
       [1, 2, 2], 
       [2, 2, 2], 
       [3, 2, 2], 
@@ -30,21 +22,20 @@ var Dice = (function(THREE) {
       [2, 3, 2] 
     ];
     // Deltas
-    deltaX = 0.02;
-    deltaY = 0.02;
-    deltaZ = 0.02;
+    this.deltaX = 0.02;
+    this.deltaY = 0.02;
+    this.deltaZ = 0.02;
 
     // Color
-    color = pColor || "0000ff";
+    this.color = pColor || "0000ff";
 
     // Init
     var geometry = new THREE.CubeGeometry(2,2,2);
 
-    var numbers = pNumbers || [1, 2, 3, 4, 5, 6];
-    faceNumbers = numbers;
+    this.faceNumbers = pNumbers || [1, 2, 3, 4, 5, 6];
 
     this.sceneObject = new THREE.Mesh( geometry );
-    this.setFaces(numbers);
+    this.setFaces(this.faceNumbers);
   }
 
   /* Dice extends Renderable */
@@ -57,10 +48,10 @@ var Dice = (function(THREE) {
    *
    * @return Texture
    */
-  var textTexture = function (text) {
+  Dice.prototype.textTexture = function (text) {
     var canvas = document.createElement('canvas');
     var context = canvas.getContext('2d');
-    context.fillStyle = "#"+color;
+    context.fillStyle = "#"+this.color;
     context.fillRect(0,0,300,150);
     context.fillStyle = "rgba(255,255,255,1)";
     context.font = "Bold 60px Arial";
@@ -81,12 +72,12 @@ var Dice = (function(THREE) {
    */
   Dice.prototype.setFaces = function(numbers) {
     var materials = [];
-    materials.push(new THREE.MeshLambertMaterial({ map: textTexture(numbers[5]) })); // right face
-    materials.push(new THREE.MeshLambertMaterial({ map: textTexture(numbers[4]) })); // left face
-    materials.push(new THREE.MeshLambertMaterial({ map: textTexture(numbers[2]) })); // top face
-    materials.push(new THREE.MeshLambertMaterial({ map: textTexture(numbers[0]) })); // bottom face
-    materials.push(new THREE.MeshLambertMaterial({ map: textTexture(numbers[1]) })); // front face
-    materials.push(new THREE.MeshLambertMaterial({ map: textTexture(numbers[3]) })); // back face
+    materials.push(new THREE.MeshLambertMaterial({ map: this.textTexture(numbers[5]) })); // right face
+    materials.push(new THREE.MeshLambertMaterial({ map: this.textTexture(numbers[4]) })); // left face
+    materials.push(new THREE.MeshLambertMaterial({ map: this.textTexture(numbers[2]) })); // top face
+    materials.push(new THREE.MeshLambertMaterial({ map: this.textTexture(numbers[0]) })); // bottom face
+    materials.push(new THREE.MeshLambertMaterial({ map: this.textTexture(numbers[1]) })); // front face
+    materials.push(new THREE.MeshLambertMaterial({ map: this.textTexture(numbers[3]) })); // back face
 
     var cubeMaterial = new THREE.MeshFaceMaterial(materials);
     this.sceneObject.material = cubeMaterial;
@@ -98,9 +89,9 @@ var Dice = (function(THREE) {
    * @param deltaTime
    */
   Dice.prototype.rotateCube = function(deltaTime) {
-    this.sceneObject.rotation.x += deltaTime + deltaX;
-    this.sceneObject.rotation.y += deltaTime + deltaY;
-    this.sceneObject.rotation.z += deltaTime + deltaZ;
+    this.sceneObject.rotation.x += deltaTime + this.deltaX;
+    this.sceneObject.rotation.y += deltaTime + this.deltaY;
+    this.sceneObject.rotation.z += deltaTime + this.deltaZ;
     // Reset if greater than 2 PI
     if(this.sceneObject.rotation.x > (2*Math.PI)) {
       this.sceneObject.rotation.x = 0;
@@ -121,42 +112,42 @@ var Dice = (function(THREE) {
    * @param endCallback Function to call after the end
    */
   Dice.prototype.showFace = function(nb, deltaTime, endCallback){
-    var x = diceFaces[nb][0];
-    var y = diceFaces[nb][1];
-    var z = diceFaces[nb][2];
+    var x = this.diceFaces[nb][0];
+    var y = this.diceFaces[nb][1];
+    var z = this.diceFaces[nb][2];
     if(this.sceneObject.rotation.x < (x * Math.PI/2)) {
-      this.sceneObject.rotation.x += deltaTime + deltaX;
+      this.sceneObject.rotation.x += deltaTime + this.deltaX;
     }
     if(this.sceneObject.rotation.x > (x * Math.PI/2)) {
-      this.sceneObject.rotation.x -= deltaTime + deltaX;
+      this.sceneObject.rotation.x -= deltaTime + this.deltaX;
     }
     if(this.sceneObject.rotation.y < (y * Math.PI/2)) {
-      this.sceneObject.rotation.y += deltaTime + deltaY;
+      this.sceneObject.rotation.y += deltaTime + this.deltaY;
     }
     if(this.sceneObject.rotation.y > (y * Math.PI/2)) {
-      this.sceneObject.rotation.y -= deltaTime + deltaY;
+      this.sceneObject.rotation.y -= deltaTime + this.deltaY;
     }
     if(this.sceneObject.rotation.z < (z * Math.PI/2)) {
-      this.sceneObject.rotation.z += deltaTime + deltaZ;
+      this.sceneObject.rotation.z += deltaTime + this.deltaZ;
     }
     if(this.sceneObject.rotation.z > (z * Math.PI/2)) {
-      this.sceneObject.rotation.z -= deltaTime + deltaZ;
+      this.sceneObject.rotation.z -= deltaTime + this.deltaZ;
     }
     // If arrived
     var arrived = true;
-    if(Math.abs((x * Math.PI/2) - this.sceneObject.rotation.x) < (deltaTime + deltaX)) {
+    if(Math.abs((x * Math.PI/2) - this.sceneObject.rotation.x) < (deltaTime + this.deltaX)) {
       this.sceneObject.rotation.x = x * Math.PI/2;
     }
     else {
       arrived = false;
     }
-    if(Math.abs((y * Math.PI/2) - this.sceneObject.rotation.y) < (deltaTime + deltaY)) {
+    if(Math.abs((y * Math.PI/2) - this.sceneObject.rotation.y) < (deltaTime + this.deltaY)) {
       this.sceneObject.rotation.y = y * Math.PI/2;
     }
     else {
       arrived = false;
     }
-    if(Math.abs((z * Math.PI/2) - this.sceneObject.rotation.z) < (deltaTime + deltaZ)) {
+    if(Math.abs((z * Math.PI/2) - this.sceneObject.rotation.z) < (deltaTime + this.deltaZ)) {
       this.sceneObject.rotation.z = z * Math.PI/2;
     }
     else {
